@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">chatapp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="connection">Connect to Python Server</string>
+    <string name="ip_add">Server Address</string>
+    <string name="port">Port</string>
+    <string name="connect">Connect&#8230;</string>
+    <string name="clear">Clear</string>
+    <string name="type_message">Type message &#8230;</string>
+    <string name="send">Send</string>
+
+</resources>
