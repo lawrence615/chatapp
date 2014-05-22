@@ -1,23 +1,20 @@
 package com.demo.chatapp;
 
-import com.demo.chatapp.MainActivity.MyClientTask;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class ChatActivity extends ActionBarActivity {
 
-	String dstAddress = "192.168.23.47";
+	String dstAddress = "192.168.0.102";
 	int dstPort = 5000;
 	ImageButton btnSend;
 	EditText textSend;
-	
+
 	protected ChatClient chat;
 
 	@Override
@@ -35,19 +32,13 @@ public class ChatActivity extends ActionBarActivity {
 
 			@Override
 			public void onClick(View v) {
-				if(true == chat.isConnected()){
-					chat.sendMessageToServer(textSend.getText().toString());
-				}else{
-					System.out.println("No connection to the server");
-				}
-
+				chat.sendMessageToServer(textSend.getText().toString());
 			}
 		};
 
 		btnSend.setOnClickListener(buttonSendOnClickListener);
 
 	}
-
 
 	public class MyClientTask extends AsyncTask<Void, Void, Void> {
 

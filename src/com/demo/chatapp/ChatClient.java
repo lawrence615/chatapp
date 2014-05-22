@@ -14,11 +14,12 @@ import android.util.Log;
 public class ChatClient {
 	private String response = "";
 	protected Socket socket = null;
-	
-	public ChatClient(String dstAddress, int dstPort){
+
+	public ChatClient(String dstAddress, int dstPort) {
 		try {
-			this.socket  = new Socket(dstAddress, dstPort);
+			this.socket = new Socket(dstAddress, dstPort);
 			socket.setKeepAlive(true);
+			isConnected();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,7 +32,6 @@ public class ChatClient {
 	public boolean isConnected() {
 
 		try {
-	
 
 			System.out.println("connected");
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
@@ -44,10 +44,10 @@ public class ChatClient {
 			/*
 			 * notice: inputStream.read() will block if no data return
 			 */
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				byteArrayOutputStream.write(buffer, 0, bytesRead);
-				response += byteArrayOutputStream.toString("UTF-8");
-			}
+//			while ((bytesRead = inputStream.read(buffer)) != -1) {
+//				byteArrayOutputStream.write(buffer, 0, bytesRead);
+//				response += byteArrayOutputStream.toString("UTF-8");
+//			}
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -58,39 +58,37 @@ public class ChatClient {
 			e.printStackTrace();
 			response = "IOException: " + e.toString();
 
-		} finally {
-			if (socket != null) {
-				try {
-					socket.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+		} 
 
 		return true;
 	}
 
 	public void sendMessageToServer(String message) {
-//		System.out.println("my message "+message);
-		
-		try {
-			String str = message;
-			PrintWriter out = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(this.socket.getOutputStream())), true);
-			out.println(str);
-			Log.d("Client", "Client sent message");
-		} catch (UnknownHostException e) {
-			System.out.println("Error1");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("Error2");
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("Error3");
-			e.printStackTrace();
+		// System.out.println("my message "+message);
+
+		if (true == isConnected()) {
+
+			try {
+				String str = message;
+				PrintWriter out = new PrintWriter(new BufferedWriter(
+						new OutputStreamWriter(this.socket.getOutputStream())),
+						true);
+				out.println(str);
+				Log.d("Client", "Client sent message");
+			} catch (UnknownHostException e) {
+				System.out.println("Error1");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("Error2");
+				e.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("Error3");
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("No connection to the server");
 		}
+
 	}
 
 }
