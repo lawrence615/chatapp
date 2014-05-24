@@ -794,10 +794,12 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f070003;
+        public static final int abc_search_url_text_holo=0x7f070005;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070002;
         public static final int abc_search_url_text_selected=0x7f070001;
+        public static final int textColor=0x7f070003;
+        public static final int textShadow=0x7f070004;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -983,6 +985,8 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_launcher=0x7f020057;
         public static final int ic_send_holo_light=0x7f020058;
+        public static final int speech_bubble_green=0x7f020059;
+        public static final int speech_bubble_orange=0x7f02005a;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -996,7 +1000,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050045;
+        public static final int action_settings=0x7f050046;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int address=0x7f050040;
         public static final int always=0x7f05000b;
@@ -1022,6 +1026,7 @@ containing a value of this type.
         public static final int linearLayout2=0x7f05003d;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
+        public static final int message=0x7f050045;
         public static final int message_container=0x7f05003c;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
@@ -1108,7 +1113,8 @@ containing a value of this type.
         public static final int activity_chat=0x7f030017;
         public static final int activity_main=0x7f030018;
         public static final int fragment_main=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int list_item_message=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

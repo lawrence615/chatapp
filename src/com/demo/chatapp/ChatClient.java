@@ -63,13 +63,19 @@ public class ChatClient {
 		return true;
 	}
 
+	/*
+	 * @desc  sends message to the server
+	 * @param message - string. The message typed by the user
+	 */
 	public void sendMessageToServer(String message) {
 		// System.out.println("my message "+message);
 
-		if (true == isConnected()) {
 
 			try {
 				String str = message;
+				/*
+				 * @desc writing to the socket the message received
+				 */
 				PrintWriter out = new PrintWriter(new BufferedWriter(
 						new OutputStreamWriter(this.socket.getOutputStream())),
 						true);
@@ -85,9 +91,6 @@ public class ChatClient {
 				System.out.println("Error3");
 				e.printStackTrace();
 			}
-		} else {
-			System.out.println("No connection to the server");
-		}
 
 	}
 
