@@ -11,7 +11,7 @@ This is a screenshot of what now implemented
 
 Todos
 -----
-add emojis
+add emoticons
 
 implement two way communication
 
