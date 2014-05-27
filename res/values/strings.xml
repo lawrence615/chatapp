@@ -11,5 +11,6 @@
     <string name="clear">Clear</string>
     <string name="type_message">Type message &#8230;</string>
     <string name="send">Send</string>
+    <string name="button_description">Emoticons Button</string>
 
 </resources>

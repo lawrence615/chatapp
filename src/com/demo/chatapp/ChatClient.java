@@ -1,9 +1,11 @@
 package com.demo.chatapp;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -19,7 +21,7 @@ public class ChatClient {
 		try {
 			this.socket = new Socket(dstAddress, dstPort);
 			socket.setKeepAlive(true);
-			isConnected();
+//			getMessageFromServer();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,34 +33,9 @@ public class ChatClient {
 
 	public boolean isConnected() {
 
-		try {
-
-			System.out.println("connected");
-			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-					1024);
-			byte[] buffer = new byte[1024];
-
-			int bytesRead;
-			InputStream inputStream = this.socket.getInputStream();
-
-			/*
-			 * notice: inputStream.read() will block if no data return
-			 */
-//			while ((bytesRead = inputStream.read(buffer)) != -1) {
-//				byteArrayOutputStream.write(buffer, 0, bytesRead);
-//				response += byteArrayOutputStream.toString("UTF-8");
-//			}
-
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response = "UnknownHostException: " + e.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response = "IOException: " + e.toString();
-
-		} 
+		if(!this.socket.isConnected()){
+			return false;
+		}
 
 		return true;
 	}
@@ -93,5 +70,25 @@ public class ChatClient {
 			}
 
 	}
+	
+	public String getMessageFromServer(){
+		try {
+			InputStreamReader isr = new InputStreamReader(this.socket.getInputStream());
+			BufferedReader br  = new BufferedReader(isr);
+			response = br.readLine();
+//			System.out.println(response);
+			isr.close();
+//			this.socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(response);
+
+			return response;
+		
+	}
+	
+	
 
 }

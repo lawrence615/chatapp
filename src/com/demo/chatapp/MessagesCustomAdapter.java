@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;;
 
 public class MessagesCustomAdapter extends ArrayAdapter<ChatMessage> {
 	private ArrayList<ChatMessage> ctmsg;
@@ -53,6 +56,13 @@ public class MessagesCustomAdapter extends ArrayAdapter<ChatMessage> {
 //		System.out.println("<<my message>>" + chatMessage.getMessage());
 //		holder.txtSender.setText(chatMessage.getSender());
 		holder.txtMessage.setText(chatMessage.getMessage());
+		LayoutParams lp = (LayoutParams) holder.txtMessage.getLayoutParams();
+		
+		if(chatMessage.getSender() == "in"){
+			holder.txtMessage.setBackgroundResource(R.drawable.speech_bubble_orange);
+			lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT); 
+			holder.txtMessage.setLayoutParams(lp);
+		}
 
 		return convertView;
 	}

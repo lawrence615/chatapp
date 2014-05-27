@@ -20,19 +20,20 @@ public class ChatActivity extends ActionBarActivity {
 	ImageButton btnSend;
 	EditText textSend;
 	ListView lv;
+	boolean mRun = false;
 
 	MessagesCustomAdapter customadapter = null;
 
 	protected ChatClient chat;
 	ArrayList<ChatMessage> conversation = new ArrayList<ChatMessage>();
+	private TcpClient mTcpClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 
-		MyClientTask myClientTask = new MyClientTask(dstAddress, dstPort);
-		myClientTask.execute();
+		new MyClientTask().execute("");
 
 		btnSend = (ImageButton) findViewById(R.id.btn_send);
 		btnSend.setEnabled(false);
@@ -51,7 +52,7 @@ public class ChatActivity extends ActionBarActivity {
 					int after) {
 				// TODO Auto-generated method stub
 				btnSend.setEnabled(false);
-				
+
 			}
 
 			@Override
@@ -67,9 +68,12 @@ public class ChatActivity extends ActionBarActivity {
 
 			@Override
 			public void onClick(View v) {
-				chat.sendMessageToServer(textSend.getText().toString());
+				// chat.sendMessageToServer(textSend.getText().toString());
 				ChatMessage objCM = new ChatMessage(null, textSend.getText()
 						.toString());
+				if (mTcpClient != null) {
+					mTcpClient.sendMessage(textSend.getText().toString());
+				}
 				conversation.add(objCM);
 				setMessageOnList();
 				textSend.setText("");
@@ -85,32 +89,48 @@ public class ChatActivity extends ActionBarActivity {
 		lv = (ListView) findViewById(R.id.message_container);
 		customadapter = new MessagesCustomAdapter(getApplicationContext(),
 				R.layout.list_item_message, conversation);
-
+//		customadapter.notifyDataSetChanged();
 		lv.setAdapter(customadapter);
 	}
 
-	public class MyClientTask extends AsyncTask<Void, Void, Void> {
-
-		String dstAddress;
-		int dstPort;
-
-		MyClientTask(String addr, int port) {
-			dstAddress = addr;
-			dstPort = port;
-		}
+	public class MyClientTask extends AsyncTask<String, String, TcpClient> {
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
-			chat = new ChatClient(dstAddress, dstPort);
+		protected TcpClient doInBackground(String... message) {
+
+			// we create a TCPClient object and
+			mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+				@Override
+				// here the messageReceived method is implemented
+				public void messageReceived(String message) {
+					// this method calls the onProgressUpdate
+					publishProgress(message);
+				}
+			});
+			mTcpClient.run();
+
 			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			// textResponse.setText(response);
+		protected void onProgressUpdate(String... values) {
+			super.onProgressUpdate(values);
+			ChatMessage objCM = new ChatMessage("in", values[0]);
+			// in the arrayList we add the messaged received from server
+			conversation.add(objCM);
+			setMessageOnList();
 
 		}
+
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		// disconnect
+		mTcpClient.stopClient();
+		mTcpClient = null;
 
 	}
 

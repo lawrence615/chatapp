@@ -34,6 +34,14 @@
         android:background="@android:color/white"
         android:paddingBottom="4dip" >
 
+        <ImageView
+            android:id="@+id/emoticons_button"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.15"
+            android:contentDescription="@string/button_description"
+            android:src="@drawable/ic_smiley" />
+
         <EditText
             android:id="@+id/text_send"
             android:layout_width="0dip"
@@ -42,7 +50,7 @@
             android:layout_weight="1"
             android:hint="@string/type_message"
             android:imeOptions="actionSend"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:minHeight="48dip"
             android:nextFocusRight="@+id/btn_send"
             android:textSize="16sp" >
